@@ -82,16 +82,15 @@ def buscar_profe(request):
     return render(request, "buscar_profesor.html")   
 
 #########resultado busqueda#############    
-
 def buscar_prof_final(request):
     if request.GET["nombre"]:
        nombre = request.GET["nombre"]
-       profesores_encontrados  = profesores.objects.filter(nombre__icontains= nombre)
-       return render( request , "resultado_busqueda_prof.html" , {"profesores": profesores_encontrados})
+       profesor_encontrados = profesores.objects.filter(nombre__icontains=nombre)
+       return render(request, "resultado_busqueda_prof.html", {"profesores": profesor_encontrados})
     else:
         return HttpResponse("Ingrese el nombre del Profesor")
 
-       
+
      
 #################alumnos################
 
