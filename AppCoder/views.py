@@ -3,6 +3,9 @@ from AppCoder.models import Curso, profesores , Alumnos
 from django.http import HttpResponse
 from django.template import loader
 from AppCoder.forms import Curso_formulario , Profesor_formulario , AlumnoForm
+from django.contrib.auth.forms import AuthenticationForm , UserCreationForm
+from django.contrib.auth import login, authenticate
+
 
 
 
@@ -102,7 +105,7 @@ def alumno_formulario(request):
         if mi_formulario_alumno.is_valid():
             datos_alumno = mi_formulario_alumno.cleaned_data
             # Crea una instancia del modelo Alumno con los datos del formulario
-            alumno = alumnos(nombre=datos_alumno["nombre"], dni=datos_alumno["dni"])
+            alumno = Alumnos(nombre=datos_alumno["nombre"], dni=datos_alumno["dni"])
             # Llama al método save() en la instancia del modelo Alumno
             alumno.save()
             return render(request, "formulario_alumnos.html")
@@ -117,3 +120,46 @@ def ver_alumnos(request):
     return HttpResponse(documento_alumnos)
 
 
+#########pagina de busqueda#############
+def buscar_alumno(request):
+    return render(request, "buscar_alumno.html")   
+
+#########resultado busqueda#############    
+def buscar_alumno_final(request):
+    if request.GET["nombre"]:
+       nombre = request.GET["nombre"]
+       alumno_encontrados = Alumnos.objects.filter(nombre__icontains=nombre)
+       return render(request, "resultado_busqueda_alum.html", {"alumnos": alumno_encontrados})
+    else:
+        return HttpResponse("Ingrese el nombre del Alumno")
+
+#########loguin#############  
+
+def login_request(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            usuario = form.cleaned_data.get("username")
+            contra = form.cleaned_data.get("password")
+            user = authenticate(username=usuario , password=contra)
+            if user is not None:
+                login(request , user )
+                return render( request , "inicio.html" , {"mensaje":f"Bienvenido/a {usuario}"})
+            else:
+                return HttpResponse(f"Usuario no encontrado")
+        else:
+            return HttpResponse(f"FORM INCORRECTO {form}")
+
+    form = AuthenticationForm()
+    return render( request , "login.html" , {"form":form})
+
+    ###########registro##########
+
+
+def register(request):
+    
+    if request.method == "POST":
+        pass
+    else:
+        form = UserCreationForm()
+    return render(request , "registro.html" , {"form":form})

@@ -23,7 +23,28 @@
                 {% endfor %}
             </tbody>
         </table>
-
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="text-center">Buscar Profesor</h2>
+                            </div>
+                            <div class="card-body">
+                                <form action="buscar_prof" method="GET">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre del Profesor:</label>
+                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre del profesor">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">Buscar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    {% endblock %}
 
         <!-- O puedes usar un div con margen para crear el espacio -->
         <div style="margin-bottom: 20px;"></div>

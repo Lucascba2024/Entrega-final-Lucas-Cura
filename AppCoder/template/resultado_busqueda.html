@@ -2,7 +2,7 @@
 
 {% load static %}
 {% block contenido %}  
-
+<div class="grid-container" style="background-color: black;">
    {% if cursos %}
         <ul>
         {% for curso in cursos %}
@@ -15,7 +15,20 @@
     <p>No se encontraron cursos con ese nombre</p>
 
     {% endif %}
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 20px;
+            background-color: black;
+            color: white;
+        }
 
+        .grid-item {
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+    </style>
  
 
 {% endblock %}

@@ -1,0 +1,25 @@
+{% extends "padre.html" %}
+{% load static %}
+
+{% block contenido %}  
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="text-center">Buscar Alumnos</h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="buscar_al" method="GET">
+                            <div class="form-group">
+                                <label for="nombre">Nombre del Alumnos:</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre del Alumno">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Buscar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

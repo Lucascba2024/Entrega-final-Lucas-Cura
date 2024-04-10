@@ -1,0 +1,58 @@
+{% extends "padre.html" %}
+{% load static %}
+
+{% block contenido %}
+    
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Buscar Alumnos</h2>
+                </div>
+                <div class="card-body">
+                    <form action="buscar_al" method="GET">
+                        <div class="form-group">
+                            <label for="nombe">Nombre del Alumno:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre del Alumno">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Buscar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 style="color: white;">Resultados de la búsqueda de Alumnos</h2>
+    
+<div class="grid-container" style="background-color: black;">
+    {% if alumnos %}
+        {% for n in alumnos %}
+            <div class="grid-item" style="color: white;">
+                <p><strong>Nombre:</strong> {{ n.nombre }}</p>
+                <p><strong>DNI:</strong> {{ n.dni }}</p>
+                <!-- Agrega más detalles del alumno según sea necesario -->
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No se encontraron Alumnos con ese nombre</p>
+    {% endif %}
+</div>
+
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-gap: 20px;
+        background-color: black;
+        color: white;
+    }
+
+    .grid-item {
+        border: 1px solid #ccc;
+        padding: 20px;
+    }
+</style>
+
+{% endblock %}

@@ -15,6 +15,9 @@ urlpatterns = [
     path("buscar_profesor", views.buscar_profe),
     path("buscar_prof", views.buscar_prof_final),
     path("alta_alumno", views.alumno_formulario),
+    path("buscar_alumno", views.buscar_alumno),
+    path("login", views.login_request)
+    ,
 
   
 ]
