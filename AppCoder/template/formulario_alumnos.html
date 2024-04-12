@@ -3,16 +3,26 @@
 {% load static %}
 
 {% block contenido %}
-    <form action="alta_alumno" method="POST">
-        {% csrf_token %}
-        <p>Nombre Alumno</p>
-        <input type="text" name = "nombre" required>
-        <p>DNI</p>
-        <input type="number" name = "dni" required>
-        <button> Enviar</button>
-
-    </form>
-
-
-    
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form action="alta_alumno" method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Ingrese el nuevo Alumno:</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="dni" class="form-label">DNI:</label>
+                                <input type="number" class="form-control" id="dni" name="dni" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

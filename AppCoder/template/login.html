@@ -1,11 +1,49 @@
-{% extends "padre.html" %}
+{% extends 'padre.html' %}
 {% load static %}
 
+
 {% block contenido %}
-    <h2>Ingrese sus datos</h2>
-    <form action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button>Enviar</button>
-    </form>
+    <style>
+        .centered-content {
+            display: flex;
+            justify-content: center;
+            height: 100vh; /* Ajusta la altura según sea necesario */
+            text-align: center;
+        }
+
+        .content-box {
+            background-color: #CBDB5B; /* Color del recuadro principal */
+            padding: 20px; /* Espacio alrededor del recuadro */
+            border-radius: 10px; /* Borde redondeado */
+            height: 300px; /* Ajusta la altura del recuadro principal */
+            margin: 20px; /* Espacio externo alrededor del recuadro */
+        }
+
+        h2 {
+            color: #161a00; /* Color del título */
+        }
+
+        form {
+            color: #0e0f02; /* Color del texto dentro del formulario */
+        }
+
+        input[type="text"], button {
+            background-color: #f2f2f2; /* Color de fondo gris suave para los recuadros de entrada de texto y el botón */
+            border: none; /* Elimina el borde de los recuadros de entrada de texto y el botón */
+            padding: 10px; /* Espacio dentro de los recuadros de entrada de texto y el botón */
+            margin-bottom: 10px; /* Espacio entre los elementos */
+            width: 100%; /* Ajusta el ancho de los recuadros de entrada de texto y el botón */
+        }
+    </style>
+     
+    <div class="centered-content">
+        <div class="content-box">
+            <h2>Ingrese sus datos</h2>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}

@@ -3,16 +3,26 @@
 {% load static %}
 
 {% block contenido %}
-    <form action="alta_profesor" method="POST">
-        {% csrf_token %}
-        <p>Nombre Profesor</p>
-        <input type="text" name = "nombre" required>
-        <p>Camada</p>
-        <input type="number" name = "camada" required>
-        <button> Enviar</button>
-
-    </form>
-
-
-    
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form action="alta_profesor" method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Ingrese el nuevo Profesor:</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="camada" class="form-label">Camada:</label>
+                                <input type="number" class="form-control" id="camada" name="camada" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
