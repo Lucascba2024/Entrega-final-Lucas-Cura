@@ -1,0 +1,28 @@
+{% extends 'padre.html' %}
+{% load static %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form action="{% url 'editar_curso' curso.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Ingrese el nuevo Curso:</label>
+                            {{ mi_formulario.nombre }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="camada" class="form-label">Camada:</label>
+                            {{ mi_formulario.camada }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
