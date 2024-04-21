@@ -6,9 +6,27 @@ from AppCoder.forms import Curso_formulario , Profesor_formulario , AlumnoForm, 
 from django.contrib.auth.forms import AuthenticationForm , UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LogoutView
+from django.utils import timezone
+
 
 
 # Create your views here.
+
+
+class CustomLogoutView(LogoutView):
+    template_name = 'logout.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Obtener la fecha y hora de salida del usuario
+        logout_time = timezone.now()
+        # Agregar la fecha y hora de salida al contexto
+        context['logout_time'] = logout_time
+        return context
+
+
+
 
 def inicio (request):
     return render(request, "padre.html")

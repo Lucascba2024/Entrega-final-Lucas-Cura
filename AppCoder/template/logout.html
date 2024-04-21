@@ -2,11 +2,20 @@
 {% load static %}
 {% load tz %}
 
+
 {% block contenido %}
+<style>
+    .texto-blanco {
+        color: white;
+     
+    }
+ </style>
+    
     <div style="display: flex; justify-content: center; align-items: center; height: 40vh;">
         <div style="max-width: 80%; background-color: #808080; color: black; padding: 50px; text-align: center;">
             <h2 style="margin: 0 auto;">GRACIAS POR LA VISITA, {{ request.user.username }}</h2>
              <div style="margin-bottom: 20px;"></div> 
+             <p class="texto-blanco">Fecha y hora de salida: {{ logout_time }}</p>
             <a href="{% url 'home' %}" class="btn btn-primary">Volver</a>
         </div>
     </div>

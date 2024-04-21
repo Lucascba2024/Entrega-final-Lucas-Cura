@@ -1,0 +1,7 @@
+usuario admin: cti2991
+pass: coder123
+
+
+usuario comun :Jua_diaz
+
+pass = Coder123
