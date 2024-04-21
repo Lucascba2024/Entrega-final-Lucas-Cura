@@ -13,18 +13,21 @@ from django.contrib.auth.decorators import login_required
 def inicio (request):
     return render(request, "padre.html")
 
+
 def alta_curso(request, nombre):
     curso= Curso(nombre= nombre , camada = 234512)
     curso.save()
     texto = f"Se Guardo en la BD el curso: {curso.nombre} {curso.camada}"
     return HttpResponse(texto)
 
+
+
 def ver_cursos(request):
      cursos = Curso.objects.all()
-     dicc ={"cursos": cursos}
-     plantilla = loader.get_template ("cursos.html")
-     documento = plantilla.render(dicc)
-     return HttpResponse(documento)
+     avatares = Avatar.objects.filter(user=request.user.id)
+     return render(request, 'cursos.html', {'cursos': cursos, 'url': avatares[0].imagen.url if avatares.exists() else None})
+
+
 
 def alumnos(request):
     return render(request, "alumnos.html") 
@@ -37,18 +40,22 @@ def alumnos(request):
 
 def curso_formulario(request):
     if request.method == "POST":
+      
         mi_formulario = Curso_formulario(request.POST)
 
         if mi_formulario.is_valid():
             datos = mi_formulario.cleaned_data
-            curso = Curso (nombre=datos["nombre"], camada = datos["camada"])
+
+            curso = Curso( nombre=datos["nombre"], camada=datos["camada"])
             curso.save()
-            return render(request ,"formulario.html")
-    return render(request ,"formulario.html")
+            return render(request, "formulario.html")
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, "formulario.html", {'url': avatares[0].imagen.url if avatares.exists() else None})
 
 
 def buscar_curso(request):
-    return render(request, "buscar_curso.html")    
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, 'buscar_curso.html', {'url': avatares[0].imagen.url if avatares.exists() else None})
 
 
 def buscar(request):
@@ -60,6 +67,8 @@ def buscar(request):
         return HttpResponse("Ingrese el nombre del curso")
 
 #########elimina curso#############
+
+@login_required
 def elimina_curso(request , id ):
     curso = Curso.objects.get(id=id)
     curso.delete()
@@ -69,6 +78,7 @@ def elimina_curso(request , id ):
 
 #########editar curso#############
 
+@login_required
 def editar_curso(request , id):
     curso = Curso.objects.get(id=id)
     if request.method == "POST":
@@ -79,12 +89,12 @@ def editar_curso(request , id):
             curso.camada = datos["camada"]
             curso.save()
             curso = Curso.objects.all()
-            return render(request , "cursos.html" , {"cursos":curso})
+        return render(request , "cursos.html" , {"cursos":curso})
        
     else:
-        mi_formulario = Curso_formulario(initial={"nombre":curso.nombre , "camada":curso.camada})
-  
-    return render( request , "editar_curso.html" , {"mi_formulario": mi_formulario , "curso":curso})
+           mi_formulario = Curso_formulario(initial={"nombre":curso.nombre , "camada":curso.camada})
+           avatares = Avatar.objects.filter(user=request.user.id) 
+    return render( request , "editar_curso.html" , {"mi_formulario": mi_formulario , "curso":curso, 'url': avatares[0].imagen.url if avatares.exists() else None})
 
 ############################################
 ###################profesor#################
@@ -100,19 +110,19 @@ def profesor_formulario(request):
             # Llama al método save() en la instancia del modelo Profesor
             profesor.save()
             return render(request, "formulario_profesores.html")
-    return render(request, "formulario_profesores.html")
+    avatares = Avatar.objects.filter(user=request.user.id) 
+    return render(request, "formulario_profesores.html", {'url': avatares[0].imagen.url if avatares.exists() else None})
          
 
 ############ver profesores#############
+
+
 def  ver_profesores(request):
      profesor = profesores.objects.all()
-     dicc ={"profesores": profesor}
-     plantilla = loader.get_template ("profesores.html")
-     documento_pro = plantilla.render(dicc)
-     return HttpResponse(documento_pro)  
-
-
+     avatares = Avatar.objects.filter(user=request.user.id)
+     return render(request, 'profesores.html', {'profesores': profesor, 'url': avatares[0].imagen.url if avatares.exists() else None})
 #########pagina de busqueda#############
+
 def buscar_profe(request):
     return render(request, "buscar_profesor.html")   
 
@@ -126,6 +136,7 @@ def buscar_prof_final(request):
         return HttpResponse("Ingrese el nombre del Profesor")
 
 #########elimina profesor#############
+@login_required
 def elimina_profesor(request , id ):
     prof = profesores.objects.get(id=id)
     prof.delete()
@@ -133,6 +144,7 @@ def elimina_profesor(request , id ):
     return render(request , "profesores.html" , {"profesores":prof})
 
 ###############editar profesor###########
+@login_required
 def editar_profesor(request , id):
     prof = profesores.objects.get(id=id)
     print(prof.nombre)
@@ -149,9 +161,9 @@ def editar_profesor(request , id):
        
     else:
         mi_formulario_pro = Profesor_formulario(initial={"nombre":prof.nombre , "camada":prof.camada})
-    
-    return render( request , "editar_profesor.html" , {"mi_formulario_pro": mi_formulario_pro , "prof":prof})
-     
+        avatares = Avatar.objects.filter(user=request.user.id) 
+        return render(request,"editar_profesor.html" , {"mi_formulario_pro": mi_formulario_pro , "prof":prof, 'url': avatares[0].imagen.url if avatares.exists() else None})
+  
 
 ############################################
 #################alumnos################
@@ -168,16 +180,14 @@ def alumno_formulario(request):
             # Llama al método save() en la instancia del modelo Alumno
             alumno.save()
             return render(request, "formulario_alumnos.html")
-    return render(request, "formulario_alumnos.html")
+    avatares = Avatar.objects.filter(user=request.user.id) 
+    return render(request, "formulario_alumnos.html", {'url': avatares[0].imagen.url if avatares.exists() else None})
 
 
 def ver_alumnos(request):
     alumnos = Alumnos.objects.all()  # Suponiendo que Alumno es el modelo de tu tabla de alumnos
-    dicc_alumnos = {"alumnos": alumnos}
-    plantilla = loader.get_template("alumnos.html")  # Asegúrate de tener una plantilla adecuada para mostrar la lista de alumnos
-    documento_alumnos = plantilla.render(dicc_alumnos)
-    return HttpResponse(documento_alumnos)
-
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, 'alumnos.html', {"alumnos": alumnos, 'url': avatares[0].imagen.url if avatares.exists() else None})
 
 #########pagina de busqueda#############
 def buscar_alumno(request):
@@ -193,7 +203,7 @@ def buscar_alumno_final(request):
         return HttpResponse("Ingrese el nombre del Alumno")
 
 ##########eliminar alumno##############
-
+@login_required
 def elimina_alumno(request , id ):
     alum = Alumnos.objects.get(id=id)
     alum.delete()
@@ -201,7 +211,7 @@ def elimina_alumno(request , id ):
     return render(request , "alumnos.html" , {"alumnos":alum})
 
 ################edita alumno#########################
-
+@login_required
 def editar_alumno(request , id):
     alum = Alumnos.objects.get(id=id)
     if request.method == "POST":
@@ -212,13 +222,14 @@ def editar_alumno(request , id):
             alum.dni = datos_alu["dni"]
             alum.save()
             alum = Alumnos.objects.all()
-            return render(request , "alumnos.html" , {"alumnos":alum})
+        return render(request , "alumnos.html" , {"alumnos":alum})
        
     else:
         mi_formulario_alum = AlumnoForm(initial={"nombre":alum.nombre , "dni":alum.dni})
-  
-    return render( request , "editar_alumnos.html" , {"mi_formulario_alum": mi_formulario_alum , "alum":alum})
-
+        avatares = Avatar.objects.filter(user=request.user.id)
+        return render(request,"editar_alumnos.html", {"mi_formulario_alum":mi_formulario_alum, "alum":alum, 'url': avatares[0].imagen.url if avatares.exists() else None})
+       
+   
 
 #########loguin#############  
 
@@ -231,7 +242,8 @@ def login_request(request):
             user = authenticate(username=usuario , password=contra)
             if user is not None:
                 login(request , user )
-                return render( request , "inicio.html" , {"mensaje":f"Bienvenido/a {usuario}"})
+                avatares = Avatar.objects.filter(user=request.user.id)
+                return render( request , "inicio.html" , {"url":avatares[0].imagen.url})
             else:
                 return HttpResponse(f"Usuario no encontrado")
         else:
@@ -244,15 +256,15 @@ def login_request(request):
 
 
 def register(request):
-    
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
+            username = form.cleaned_data.get('username')  # Obtener el nombre de usuario
             form.save()
-            return HttpResponse("Usuario creado")
+            return render(request, "usuario_registrado.html", {'username': username})  # Pasar el nombre de usuario al template
     else:
         form = UserCreationForm()
-    return render(request , "registro.html" , {"form":form})
+    return render(request, "registro.html", {"form": form})
 
 ###############editar perfil#############
 def editarPerfil(request):

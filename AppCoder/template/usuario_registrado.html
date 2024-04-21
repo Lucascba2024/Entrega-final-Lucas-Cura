@@ -1,0 +1,13 @@
+{% extends "padre.html" %}
+{% load static %}
+
+{% block contenido %}  
+<div style="margin-bottom: 40px;"></div> 
+
+<h1 class="text-center titlle" style="color: hsl(0, 0%, 100%);">REGISTRO EXITOSAMENTE</h1>
+<p class="text-center" style="color: hsl(0, 0%, 100%);">¡Bienvenido, {{ username }}!</p>
+
+<div class="text-center">
+    <a href="{% url 'login' %}" class="btn btn-primary">Ingresar</a>
+</div>
+{% endblock %}

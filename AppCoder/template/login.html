@@ -12,7 +12,7 @@
         }
 
         .content-box {
-            background-color: #CBDB5B; /* Color del recuadro principal */
+            background-color:#c0c0c0; /* Color del recuadro principal */
             padding: 20px; /* Espacio alrededor del recuadro */
             border-radius: 10px; /* Borde redondeado */
             height: 300px; /* Ajusta la altura del recuadro principal */
@@ -38,7 +38,7 @@
      
     <div class="centered-content">
         <div class="content-box">
-            <h2>Ingrese sus datos</h2>
+            <h3 style="font-weight: bold;">INGRESE SUS DATOS</h3>
             <form action="" method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}

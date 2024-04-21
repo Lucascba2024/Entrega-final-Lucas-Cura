@@ -2,26 +2,44 @@
 {% load static %}
 
 {% block contenido %}
-   <h2>{{mensaje}}</h2>
-   <div class="container">
-        <div class="row">
-            <div class="col-12  col-md-4">
-                <div class="card">
-                    <img src="{% static 'AppCoder/assets/img/testimonials-2.jpg' %}"/>
-                    <div class="card-body">
-                        <h5 class="card-title">{{usuario}}</h5>
-                        <p class="card-text">Me gusto mucho el curso</p>
-                        <a class="btn btn-success" href="">Enviar mensaje</a>
-                        <a href="{% url 'Logout' %}" class="btn btn-danger">LogOut</a>
-                        <a href="{% url 'EditarPerfil' %}" class="btn btn-warning">Editar</a>
-                    </div>
-                </div>
-            
+<style>
+    .custom-container {
+        margin: 0 auto; /* Alinea horizontalmente el contenedor */
+        text-align: center; /* Alinea el contenido del contenedor horizontalmente */
+    }
+    .foto-container {
+        display: flex;
+        justify-content: center;
+    }
+    .card {
+        width: 300px; /* Ancho deseado para la tarjeta */
+    }
+    .card-text {
+        font-size: 24px; /* Tamaño de fuente más grande */
+        color: white; /* Color blanco para el texto */
+    }
+</style>
+
+<div style="margin-bottom: 40px;"></div> 
+
+<div class="container custom-container">
+    <div class="foto-container">
+        <div class="card">
+            <img src="{{ url }}"  class="card-img-top" />
+            <div class="card-body">
+                <h5 class="card-title">{{ usuario }}</h5>
+                <p class="card-text">{{ mensaje }}</p>
+                <a class="btn btn-success" href="">Enviar mensaje</a>
+                 <form method="post" action="{% url 'Logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">logout</button>
+                </form>
+
+                <a href="{% url 'EditarPerfil' %}" class="btn btn-warning">Editar</a>
+                
             </div>
         </div>
     </div>
-    
+</div>
 
 {% endblock %}
-
-

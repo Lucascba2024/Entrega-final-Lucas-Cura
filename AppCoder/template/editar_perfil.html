@@ -2,8 +2,65 @@
 {% load static %}
 
 {% block contenido %}
-    <h2>Editar Perfil {{usuario}}</h2>
+    
+    
+<style>
+    .centered-content {
+        display: flex;
+        justify-content: center;
+        height: 100vh; /* Ajusta la altura según sea necesario */
+        text-align: center;
+    }
 
+    .content-box {
+        background-color:#c0c0c0; /* Color del recuadro principal */
+        padding: 20px; /* Espacio alrededor del recuadro */
+        border-radius: 10px; /* Borde redondeado */
+        height: 300px; /* Ajusta la altura del recuadro principal */
+        margin: 20px; /* Espacio externo alrededor del recuadro */
+    }
+
+    h2 {
+        color: #161a00; /* Color del título */
+    }
+
+    form {
+        color: #0e0f02; /* Color del texto dentro del formulario */
+    }
+
+    input[type="text"], button {
+        background-color: #f2f2f2; /* Color de fondo gris suave para los recuadros de entrada de texto y el botón */
+        border: none; /* Elimina el borde de los recuadros de entrada de texto y el botón */
+        padding: 10px; /* Espacio dentro de los recuadros de entrada de texto y el botón */
+        margin-bottom: 10px; /* Espacio entre los elementos */
+        width: 100%; /* Ajusta el ancho de los recuadros de entrada de texto y el botón */
+    }
+
+
+    button {
+        background-color: #f2f2f2; /* Color de fondo gris suave para el botón */
+        border: none; /* Elimina el borde del botón */
+        padding: 10px 50px; /* Espacio interno del botón (10px arriba/abajo, 20px izquierda/derecha) */
+        margin-top: 10px; /* Espacio superior del botón */
+        width: auto; /* Ancho automático del botón */
+    }
+
+    table {
+        margin: 0 auto; /* Centra la tabla horizontalmente */
+    }
+
+    table tr td input[type="text"] {
+        width: 100%; /* Ajusta el ancho del textbox al 100% del ancho de la celda */
+        box-sizing: border-box; /* Incluye el padding y el border en el ancho del textbox */
+    }
+
+    
+</style>
+
+
+    <div class="centered-content">
+    <div class="content-box">
+    <h3 style="font-weight: bold;">EDITAR PERFIL {{usuario}} </h3>
     <form action="" method="POST">
         {% csrf_token %}
         <table>
@@ -12,6 +69,4 @@
         <button>Enviar</button>
     </form>
   
-  
-   
-{% endblock %}
+    {% endblock %}
